@@ -1,1 +1,1 @@
-192.168.1.22 
+target1 ansible_host=192.168.1.22 ansible_ssh_pass=rockylinux
