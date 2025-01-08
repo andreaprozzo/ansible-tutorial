@@ -1,2 +1,2 @@
-target1 ansible_host=192.168.1.22  ansible_user=rockylinux ansible_ssh_pass=rockylinux
-target2 ansible_host=192.168.1.23  ansible_user=rockylinux ansible_ssh_pass=rockylinux
+target1 ansible_host=192.168.1.22 ansible_user=rockylinux
+target2 ansible_host=192.168.1.23 ansible_user=rockylinux
