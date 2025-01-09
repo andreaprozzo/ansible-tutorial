@@ -5,12 +5,12 @@
   tasks:
 
   - name: install httpd, php support, updates for index .....
-    dnf: 
+    package: 
       name: 
-        - httpd
-        - php
+        - {{ apache_package }}
+        - {{ php_package }}
       state: latest
       update_cache: yes
-    when: ansible_distribution == "Rocky" 
+
 
  
