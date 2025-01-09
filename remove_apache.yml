@@ -8,7 +8,7 @@
     yum:
       update
 
-  - name: install apache2 package
-    yum:
+  - name: uninstall apache2 package
+    yum erase:
       name: httpd
-      status: absent 
+ 
