@@ -9,7 +9,7 @@
       update_cache: yes
     when: ansible_distribution == "Rocky" 
 
-  - name: uninstall httpd package.....
+  - name: install httpd package.....
     dnf: 
       name: httpd
       state: latest
