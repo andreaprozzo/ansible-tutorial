@@ -14,12 +14,12 @@
   become: true
   tasks:
 
-  -name: install httpd on the web server.....
-   dnf:
-    name: 
-      - httpd
-      - php
-    state: latest
+  - name: install httpd on the web server.....
+    dnf:
+     name: 
+       - httpd
+       - php
+     state: latest
 
 
 
