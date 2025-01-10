@@ -1,2 +1,8 @@
-192.168.1.22 ansible_user=rockylinux apache_package=httpd php_package=php 
-192.168.1.23 ansible_user=rockylinux apache_package=httpd php_package=php
+[web_server]
+192.168.1.22 ansible_user=rockylinux
+
+[db_server]
+192.168.1.23 ansible_user=rockylinux 
+
+[file_server]
+192.168.1.26 ansible_user=rockylinux 

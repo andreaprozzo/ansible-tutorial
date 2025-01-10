@@ -1,0 +1,26 @@
+---
+#installazione completa di httpd su tutte le macchine target
+- hosts: all
+  become: true
+  tasks:
+
+  - name: install updates.....
+    dnf: 
+      update_only: yes
+      update_cache: yes
+
+#installazione di apache web server sul target1 
+- hosts: web_server
+  become: true
+  tasks:
+
+  -name: install httpd on the web server.....
+   dnf:
+    name: 
+      - httpd
+      - php
+    state: latest
+
+
+
+ 
