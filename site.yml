@@ -9,17 +9,37 @@
       update_only: yes
       update_cache: yes
 
-#installazione di apache web server sul target1 
+#installazione di apache web server sul target1 192.168.1.22
 - hosts: web_server
   become: true
   tasks:
 
   - name: install httpd on the web server.....
     dnf:
-     name: 
+      name: 
        - httpd
        - php
-     state: latest
+      state: latest
+
+#installazione del server DB MariaDB sul target2 192.168.1.23 
+- hosts: db_server
+  become: true
+  tasks: 
+
+  - name: install maria DB server.....
+    dnf:
+      name: mariadb
+      state: latest
+
+#installazione del file server SAMBA sul target3 192.168.1.26 
+- hosts: file_server
+  become: true
+  tasks: 
+
+  - name: install Samba file server.....
+    dnf:
+      name: samba
+      state: latest
 
 
 
