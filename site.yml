@@ -20,6 +20,16 @@
        - httpd
        - php
       state: latest
+  
+  - name: copy default html file for site
+    tags: apache,apache2,httpd
+    copy:
+      src: default_site.html
+      dest: /var/www/html/index.html
+      owner: root
+      group: root
+      mode: 0644
+
 
 #installazione del server DB MariaDB sul target2 192.168.1.23 
 - hosts: db_server
