@@ -9,6 +9,26 @@
       update_only: yes
       update_cache: yes
 
+
+#installazione di unzip e terraform sulla macchina principale (workstation)
+- hosts: workstation
+  become: true
+  tasks: 
+
+  - name: install unzip.....
+    package:
+      name: unzip
+  
+  - name: install terraform.....
+    unarchive:
+      src: https://releases.hashicorp.com/terraform/1.10.4/terraform_1.10.4_linux_amd64.zip
+      dest: /usr7local/bin
+      remote_src: yes
+      mode: 0755
+      owner: root
+      group: root
+
+
 #installazione di apache web server sul target1 192.168.1.22
 - hosts: web_server
   become: true
@@ -21,7 +41,7 @@
        - php
       state: latest
   
-  - name: copy default html file for site
+  - name: copy default html file for site.....
     tags: apache,apache2,httpd
     copy:
       src: default_site.html
