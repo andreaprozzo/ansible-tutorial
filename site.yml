@@ -41,6 +41,12 @@
        - php
       state: latest
   
+  - name: start httpd service on Rockylinux
+    tags: apache,rockylinux,httpd
+    service: 
+      name: httpd
+      state: started
+  
   - name: copy default html file for site.....
     tags: apache,apache2,httpd
     copy:
