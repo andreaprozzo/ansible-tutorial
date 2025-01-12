@@ -41,12 +41,28 @@
        - php
       state: latest
   
-  - name: start httpd service on Rockylinux
+  - name: start httpd service on Rockylinux.....
     tags: apache,rockylinux,httpd
     service: 
       name: httpd
       state: started
       enabled: yes
+
+#Modificare una linea di codice o altro all'interno di un documento in una macchina target      
+  - name: change e-mail address for admin in httpd.conf file.....
+    tags: apache,rockylinux,httpd
+    lineinfile:
+      path: /etc/httpd/conf/httpd.conf
+      regexp: '^ServerAdmin' 
+      line: ServerAdmin andrea.prozzo@gmail.com
+    register: httpd
+
+  - name: restart httpd service
+    tags: apache,rockylinux,httpd
+    service: 
+      name: httpd
+      state: restarted
+    when: httpd.changed
   
   - name: copy default html file for site.....
     tags: apache,apache2,httpd
