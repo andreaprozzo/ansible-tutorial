@@ -20,5 +20,5 @@
 
 - hosts: file_server
   become: true
-  role:
+  roles:
     - file_server  
