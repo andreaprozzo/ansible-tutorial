@@ -26,7 +26,7 @@
     tags: always
     authorized_key:
       user: simone
-      key: "sh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDQzKepEav0kdCWeJJDIfV1ZlZZLYfIrRecKPa8612/L ansible"
+      key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDQzKepEav0kdCWeJJDIfV1ZlZZLYfIrRecKPa8612/L ansible"
 
 
 #copio il file relativo all'utenza sudo di simone nella macchina target
