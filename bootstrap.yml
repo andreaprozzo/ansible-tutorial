@@ -1,5 +1,5 @@
 ---
-#installazione completa di httpd su tutte le macchine target
+#installazione di aggiornamenti sulle macchine target
 - hosts: all
   become: true
   tasks:
@@ -9,7 +9,7 @@
       update_only: yes
       update_cache: yes
 
-#Creazione utente per ansible 
+#Creazione utente con ssh ansible ansible 
 - hosts: all
   become: true
   tasks:
@@ -29,7 +29,7 @@
       key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDQzKepEav0kdCWeJJDIfV1ZlZZLYfIrRecKPa8612/L ansible"
 
 
-#copio il file relativo all'utenza sudo di simone nella macchina target
+#copio il file relativo all'utenza sudo di simone nelle macchine target
   - name: add sudoers file for simone
     tags: always
     copy:
