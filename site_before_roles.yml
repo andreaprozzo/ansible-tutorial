@@ -1,117 +1,94 @@
- ---
- 
- - hosts: all
-   become: true
-   pre_tasks:
- 
-   - name: install updates (CentOS)
-     tags: always
-     dnf:
-       update_only: yes
-       update_cache: yes
- 
- - hosts: all
-   become: true
-   tasks:
- 
-   - name: create simone user
-     user:
-       name: simone
-       groups: root
-     
-   - name: add ssh key for simone
-     tags: always
-     authorized_key:
-       user: simone
-       key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDQzKepEav0kdCWeJJDIfV1ZlZZLYfIrRecKPa8612/L ansible"
-         
-   - name: add sudoers file for simone
-     tags: always
-     copy:
-       src: sudoer_simone
-       dest: /etc/sudoers.d/simone
-       owner: root
-       group: root
-       mode: 0440
- 
- - hosts: workstations
-   become: true
-   tasks:
- 
-   - name: install unzip
-     package:
-       name: unzip
- 
-   - name: install terraform
-     unarchive:
-       src: https://releases.hashicorp.com/terraform/1.10.4/terraform_1.10.4_linux_amd64.zip
-       dest: /usr/local/bin
-       remote_src: yes
-       mode: 0755
-       owner: root
-       group: root
- 
- - hosts: web_servers
-   become: true
-   tasks:
- 
-   - name: install httpd package (CentOS)
-     tags: apache,centos,httpd
-     dnf:
-       name:
-         - httpd
-         - php
-       state: latest
-   
-   - name: start and enable httpd (CentOS)
-     tags: apache,centos,httpd
-     service:
-       name: httpd
-       state: started
-       enabled: yes
- 
-   - name: change e-mail address for admin
-     tags: apache,centos,httpd
-     lineinfile:
-       path: /etc/httpd/conf/httpd.conf
-       regexp: '^ServerAdmin'
-       line: ServerAdmin somebody@somewhere.net
-     when: ansible_distribution == "CentOS"
-     register: httpd
+---
+#installazione di aggiornamenti sulle macchine target
+- hosts: all
+  become: true
+  pre_tasks:
+
+  - name: update repo cache.....
+    dnf: 
+      update_cache: yes
+    changed_when: false
+
+#installazione di unzip e terraform sulla macchina principale (workstation)
+- hosts: workstation
+  become: true
+  tasks: 
+
+  - name: install unzip.....
+    package:
+      name: unzip
   
-   - name: restart httpd (CentOS)
-     tags: apache,centos,httpd
-     service:
-       name: httpd
-       state: restarted
-     when: httpd.changed    
- 
-   - name: copy html file for site
-     tags: apache,apache,apache2,httpd
-     copy:
-       src: default_site.html
-       dest: /var/www/html/index.html
-       owner: root
-       group: root
-       mode: 0644
- 
- - hosts: db_servers
-   become: true
-   tasks:
- 
-   - name: install mariadb server package (CentOS)
-     tags: centos,db,mariadb
+  - name: install terraform.....
+    unarchive:
+      src: https://releases.hashicorp.com/terraform/1.10.4/terraform_1.10.4_linux_amd64.zip
+      dest: /usr/local/bin
+      remote_src: yes
+      mode: 0755
+      owner: root
+      group: root
+
+
+#installazione di apache web server sul target1 192.168.1.22
+- hosts: web_server
+  become: true
+  tasks:
+
+  - name: install httpd on the web server.....
     dnf:
-       name: mariadb
-       state: latest
- 
- - hosts: file_servers
-   tags: samba
-   become: true
-   tasks:
- 
-   - name: install samba package
-     tags: samba
-     package:
-       name: samba
-       state: latest
+      name: 
+       - httpd
+       - php
+      state: latest
+  
+  - name: start httpd service on Rockylinux.....
+    tags: apache,rockylinux,httpd
+    service: 
+      name: httpd
+      state: started
+      enabled: yes
+
+#Modificare una linea di codice o altro all'interno di un documento in una macchina target      
+  - name: change e-mail address for admin in httpd.conf file.....
+    tags: apache,rockylinux,httpd
+    lineinfile:
+      path: /etc/httpd/conf/httpd.conf
+      regexp: '^ServerAdmin' 
+      line: ServerAdmin andrea.prozzo@gmail.com
+    register: httpd
+
+  - name: restart httpd service
+    tags: apache,rockylinux,httpd
+    service: 
+      name: httpd
+      state: restarted
+    when: httpd.changed
+  
+  - name: copy default html file for site.....
+    tags: apache,apache2,httpd
+    copy:
+      src: default_site.html
+      dest: /var/www/html/index.html
+      owner: root
+      group: root
+      mode: 0644
+
+
+#installazione del server DB MariaDB sul target2 192.168.1.23 
+- hosts: db_server
+  become: true
+  tasks: 
+
+  - name: install maria DB server.....
+    dnf:
+      name: mariadb
+      state: latest
+
+#installazione del file server SAMBA sul target3 192.168.1.26 
+- hosts: file_server
+  become: true
+  tasks: 
+
+  - name: install Samba file server.....
+    dnf:
+      name: samba
+      state: latest
