@@ -1,5 +1,13 @@
 ---
+#installazione di aggiornamenti sulle macchine target
+- hosts: all
+  become: true
+  pre_tasks:
 
+  - name: update repo cache.....
+    dnf: 
+      update_cache: yes
+    changed_when: false
 
 #installazione di unzip e terraform sulla macchina principale (workstation)
 - hosts: workstation
