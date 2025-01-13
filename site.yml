@@ -9,6 +9,35 @@
       update_only: yes
       update_cache: yes
 
+#Creazione utente per ansible 
+- hosts: all
+  become: true
+  tasks:
+  - name: create simone user
+    tags: always
+    user:
+      name: simone
+      groups: root
+
+       
+#Assegno la chiave ssh per utente ansible
+- name: add ssh for user ansible
+  tags: always
+  authorized_key: 
+    user: simone
+    key: "sh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDQzKepEav0kdCWeJJDIfV1ZlZZLYfIrRecKPa8612/L ansible"
+
+
+#copio il file relativo all'utenza sudo di simone nella macchina target
+- name: add sudoers file for simone
+  tags: always
+  copy:
+    src: sudoer_simone
+    dest: /etc/sudoers.d/simone
+    owner: root
+    group: root
+    mode: 0440 
+
 
 #installazione di unzip e terraform sulla macchina principale (workstation)
 - hosts: workstation
