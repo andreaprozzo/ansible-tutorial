@@ -11,34 +11,27 @@
      changed_when: false
      when: ansible_distribution == "CentOS"
  
-   - name: update repository index (Ubuntu)
-     tags: always
-     apt:
-       update_cache: yes
-     changed_when: false
-     when: ansible_distribution == "Ubuntu"
- 
  - hosts: all
    become: true
    roles:
      - base
     
- - hosts: workstations
+ - hosts: workstation
    become: true
    roles:
-     - workstations
+     - workstation
  
- - hosts: web_servers
+ - hosts: web_server
    become: true
    roles:
-     - web_servers
+     - web_server
  
- - hosts: db_servers
+ - hosts: db_server
    become: true
    roles:
-     - db_servers
+     - db_server
  
- - hosts: file_servers
+ - hosts: file_server
    become: true
    roles:
-     - file_servers
+     - file_server
