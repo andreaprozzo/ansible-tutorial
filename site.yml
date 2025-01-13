@@ -24,7 +24,7 @@
 #Assegno la chiave ssh per utente ansible
 - name: add ssh for user ansible
   tags: always
-  authorized_key: 
+  ansible.posix.authorized_key:
     user: simone
     key: "sh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDQzKepEav0kdCWeJJDIfV1ZlZZLYfIrRecKPa8612/L ansible"
 
