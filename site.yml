@@ -11,10 +11,10 @@
      changed_when: false
      when: ansible_distribution == "CentOS"
  
- - hosts: all
-   become: true
-   roles:
-     - base
+# - hosts: all
+#   become: true
+ #  roles:
+  #   - base
     
  - hosts: workstation
    become: true
